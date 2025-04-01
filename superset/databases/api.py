@@ -126,6 +126,7 @@ from superset.utils.core import (
     get_username,
     parse_js_uri_path_item,
 )
+from superset.utils.database import parameters_json_schema
 from superset.utils.decorators import transaction
 from superset.utils.oauth2 import decode_oauth2_state
 from superset.utils.ssh_tunnel import mask_password_info
@@ -1896,14 +1897,15 @@ class DatabaseRestApi(BaseSupersetModelRestApi):
                 payload["default_driver"] = engine_spec.default_driver
 
             # show configuration parameters for DBs that support it
-            if (
-                hasattr(engine_spec, "parameters_json_schema")
-                and hasattr(engine_spec, "sqlalchemy_uri_placeholder")
-                and engine_spec.default_driver in drivers
-            ):
-                payload["parameters"] = engine_spec.parameters_json_schema()
-                payload["sqlalchemy_uri_placeholder"] = (
-                    engine_spec.sqlalchemy_uri_placeholder
+            if engine_spec.parameters_schema:
+                payload["parameters"] = parameters_json_schema(
+                    engine_spec.__name__,
+                    engine_spec.parameters_schema,
+                )
+                payload["sqlalchemy_uri_placeholder"] = getattr(
+                    engine_spec,
+                    "sqlalchemy_uri_placeholder",
+                    "",
                 )
 
             available_databases.append(payload)

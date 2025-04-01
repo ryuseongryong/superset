@@ -64,6 +64,15 @@ def load_engine_specs() -> list[type[BaseEngineSpec]]:
     """
     engine_specs: list[type[BaseEngineSpec]] = []
 
+    # load 3rd party engine specs first, so they have prioerity
+    for ep in entry_points(group="superset.db_engine_specs"):
+        try:
+            engine_spec = ep.load()
+        except Exception:  # pylint: disable=broad-except
+            logger.warning("Unable to load Superset DB engine spec: %s", ep.name)
+            continue
+        engine_specs.append(engine_spec)
+
     # load standard engines
     db_engine_spec_dir = str(Path(__file__).parent)
     for module_info in pkgutil.iter_modules([db_engine_spec_dir], prefix="."):
@@ -73,14 +82,6 @@ def load_engine_specs() -> list[type[BaseEngineSpec]]:
             for attr in module.__dict__
             if is_engine_spec(getattr(module, attr))
         )
-    # load additional engines from external modules
-    for ep in entry_points(group="superset.db_engine_specs"):
-        try:
-            engine_spec = ep.load()
-        except Exception:  # pylint: disable=broad-except
-            logger.warning("Unable to load Superset DB engine spec: %s", ep.name)
-            continue
-        engine_specs.append(engine_spec)
 
     return engine_specs
 
