@@ -97,22 +97,22 @@ dependencies = [
     "wtforms>=2.3.3, <4",
     "wtforms-json",
     "xlsxwriter>=3.0.7, <3.1",
-    "psycopg2=^2.9.5",
-    "adbc-driver-manager=^0.3.0",
-    "adbc-driver-flightsql=^0.3.0",
+    "psycopg2>=2.9.5",
+    "adbc-driver-manager>=0.3.0",
+    "adbc-driver-flightsql>=0.3.0",
 ]
 
 [project.optional-dependencies]
 adbc = [
-    "pytest=^7.2.0",
-    "pre-commit=^2.20.0",
-    "pdbpp=^0.10.3",
-    "mypy=^0.991",
-    "hypothesis=^6.61.0",
-    "pandas=^1",
-    "ipython-sql=^0.4.1",
-    "sqlalchemy=^1.4.46",
-    "snapshottest=^0.6.0",
+    "pytest>=7.2.0",
+    "pre-commit>=2.20.0",
+    "pdbpp>=0.10.3",
+    "mypy>=0.991",
+    "hypothesis>=6.61.0",
+    "pandas>=1",
+    "ipython-sql>=0.4.1",
+    "sqlalchemy>=1.4.46",
+    "snapshottest>=0.6.0",
 ]
 athena = ["pyathena[pandas]>=2, <3"]
 aurora-data-api = ["preset-sqlalchemy-aurora-data-api>=0.2.8,<0.3"]
