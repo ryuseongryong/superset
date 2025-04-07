@@ -64,6 +64,7 @@ setup(
             "postgres.psycopg2 = sqlalchemy.dialects.postgresql:dialect",
             "postgres = sqlalchemy.dialects.postgresql:dialect",
             "superset = superset.extensions.metadb:SupersetAPSWDialect",
+            "adbc_flight_sql = adbc_flight_sql_driver:Dialect",
         ],
         "shillelagh.adapter": [
             "superset=superset.extensions.metadb:SupersetShillelaghAdapter"

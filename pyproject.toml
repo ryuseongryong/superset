@@ -16,7 +16,7 @@
 # under the License.
 
 [build-system]
-requires = ["setuptools>=40.9.0", "wheel"]
+requires = ["setuptools>=40.9.0", "wheel", "poetry-core>=1.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -97,10 +97,23 @@ dependencies = [
     "wtforms>=2.3.3, <4",
     "wtforms-json",
     "xlsxwriter>=3.0.7, <3.1",
+    "psycopg2=^2.9.5",
+    "adbc-driver-manager=^0.3.0",
+    "adbc-driver-flightsql=^0.3.0",
 ]
 
 [project.optional-dependencies]
-
+adbc = [
+    "pytest=^7.2.0",
+    "pre-commit=^2.20.0",
+    "pdbpp=^0.10.3",
+    "mypy=^0.991",
+    "hypothesis=^6.61.0",
+    "pandas=^1",
+    "ipython-sql=^0.4.1",
+    "sqlalchemy=^1.4.46",
+    "snapshottest=^0.6.0",
+]
 athena = ["pyathena[pandas]>=2, <3"]
 aurora-data-api = ["preset-sqlalchemy-aurora-data-api>=0.2.8,<0.3"]
 bigquery = [
@@ -220,6 +233,10 @@ disallow_untyped_defs = true
 ignore_missing_imports = true
 no_implicit_optional = true
 warn_unused_ignores = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+warn_redundant_casts = true
+plugins = ['sqlalchemy.ext.mypy.plugin']
 
 [[tool.mypy.overrides]]
 module = "superset.migrations.versions.*"
