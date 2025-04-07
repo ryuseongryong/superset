@@ -5,7 +5,6 @@ import duckdb
 from sqlalchemy import Boolean, Integer, String
 from sqlalchemy.engine import Dialect
 from sqlalchemy.sql.type_api import TypeEngine
-from superset.db_engine_specs.impala
 
 TYPES: Dict[Type, TypeEngine] = {int: Integer(), str: String(), bool: Boolean()}
 
